@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Robinson Chronicle</title>
+<meta name="description" content="Save the date. The Robinsons are getting married, and you are invited to the celebration. March 6, 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Gelasio:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Franklin:wght@400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE ROBINSON CHRONICLE  ·  a newspaper for a wedding
+   Paper, ink, one red accent. Photos are black and white.
+   ============================================================ */
+:root{
+  --paper:#f3eee3;
+  --paper-2:#ebe4d5;
+  --paper-3:#e2d9c6;
+  --ink:#151310;
+  --ink-2:#3b352e;
+  --ink-3:#6f675c;
+  --rule:#1a1712;
+  --hair:rgba(21,19,16,.28);
+  --red:#b22a22;
+  --red-2:#8f1f19;
+  --serif:Georgia,"Gelasio","Times New Roman",serif;          /* body: Georgia, Gelasio is its metric twin for Android */
+  --display:"Libre Caslon Text",Georgia,serif;                /* headlines: nearest free match to NYT Cheltenham */
+  --black:"Pirata One","Old English Text MT","Engravers Old English BT",serif; /* nameplate: Textura blackletter */
+  --sans:"Libre Franklin","Franklin Gothic Medium",-apple-system,"Helvetica Neue",Arial,sans-serif; /* captions, labels: Franklin Gothic */
+  --script:"Pinyon Script","Snell Roundhand",cursive;
+  --page:1240px;
+  --gutter:clamp(16px,3vw,44px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:16.5px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+body::before{ /* paper grain */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.16;mix-blend-mode:multiply;
+}
+body::after{ /* soft vignette like a sheet under lamplight */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:8;
+  background:radial-gradient(120% 90% at 50% 40%,transparent 60%,rgba(60,45,20,.16) 100%);
+}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p{margin:0 0 1em}
+
+.sheet{
+  position:relative;z-index:1;
+  max-width:var(--page);margin:0 auto;
+  padding:0 var(--gutter) 64px;
+}
+
+/* ---------- tiny type helpers ---------- */
+.kicker{
+  font-family:var(--sans);font-weight:600;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+}
+.kicker.red{color:var(--red)}
+.rule{border:0;border-top:1px solid var(--rule);margin:0}
+.rule.double{border-top:3px double var(--rule)}
+.rule.thick{border-top:4px solid var(--rule)}
+.rule.hair{border-top:1px solid var(--hair)}
+.dropcap::first-letter{
+  font-family:var(--display);font-weight:700;font-size:3.9em;line-height:.78;
+  float:left;margin:.08em .12em 0 0;
+}
+.body-copy{font-size:15px;line-height:1.55;hyphens:auto;text-align:justify}
+.body-copy p{margin:0 0 .9em}
+.caption{font-size:12.5px;line-height:1.4;color:var(--ink-2);margin-top:8px}
+.caption{font-family:var(--sans);font-style:normal;font-size:12px;line-height:1.45}
+.caption b{font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--ink)}
+.byline{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
+.byline .dateline{color:var(--ink-3)}
+
+/* ---------- photos ---------- */
+.photo{position:relative;background:var(--paper-3);overflow:hidden;border:1px solid var(--rule)}
+.photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.06);transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.photo:hover img{transform:scale(1.025)}
+.photo.missing img{visibility:hidden}
+.photo.missing::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(135deg,rgba(21,19,16,.06) 0 2px,transparent 2px 14px),
+    linear-gradient(160deg,#d7ceba,#c5bba6);
+}
+.photo.missing::after{
+  content:"Drop photo here:  " attr(data-file);
+  position:absolute;inset:auto 0 0 0;padding:10px 12px;
+  font:600 10.5px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);background:rgba(243,238,227,.9);border-top:1px solid var(--rule);
+}
+.photo::after{pointer-events:none}
+/* crop focus: keep faces in frame where the slot is tighter than the frame */
+.photo img[src$="01-fence-lookout.jpg"]{object-position:50% 18%}
+.photo img[src$="05-walking-beach.jpg"],.photo img[src$="07-cheek-hold.jpg"],.photo img[src$="10-gazing-shore.jpg"],.photo img[src$="09-kiss.jpg"]{object-position:50% 22%}
+.photo img[src$="02-embrace-driftwood.jpg"]{object-position:50% 35%}
+.player .cover img{object-position:50% 22%}
+
+/* ============================================================
+   EARS + MASTHEAD
+   ============================================================ */
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:10px 0;border-bottom:1px solid var(--rule);
+  font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+}
+.topbar span{white-space:nowrap}
+.topbar .mid{flex:1;text-align:center;font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:.02em;font-weight:400;font-size:13px;color:var(--ink-2)}
+
+.masthead{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:20px;
+  padding:26px 0 14px;border-bottom:1px solid var(--rule);position:relative;
+}
+.masthead .ear{font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;line-height:1.6;align-self:center}
+.masthead .ear p{margin:0}
+.masthead .ear small{display:block;font-family:var(--serif);font-weight:400;letter-spacing:.06em;text-transform:none;font-style:italic;font-size:12.5px;color:var(--ink-2)}
+.masthead .ear.left{border:1px solid var(--rule);padding:12px 14px;justify-self:start;text-align:center}
+.masthead .ear.right{border:1px solid var(--rule);padding:12px 14px;justify-self:end;text-align:center}
+.masthead h1{
+  font-family:var(--black);font-weight:400;
+  font-size:clamp(44px,7.9vw,104px);line-height:.9;letter-spacing:.01em;
+  text-align:center;color:var(--ink);white-space:nowrap;
+  text-shadow:0 1px 0 rgba(255,255,255,.5);
+}
+.masthead h1 .the{font-size:.62em;vertical-align:.22em;margin-right:.08em}
+.dateline-bar{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:8px 0;border-bottom:3px double var(--rule);
+  font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+}
+.dateline-bar .motto{font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:.02em;font-weight:400;font-size:14px;color:var(--ink-2)}
+
+/* ============================================================
+   FRONT PAGE / HERO
+   ============================================================ */
+.front{
+  display:grid;grid-template-columns:1.55fr 1fr;gap:0;
+  padding-top:22px;
+}
+.front .lead{padding-right:28px;border-right:1px solid var(--rule)}
+.front .side{padding-left:28px;display:flex;flex-direction:column;gap:18px}
+
+.headline{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(34px,4.9vw,66px);line-height:1.02;letter-spacing:-.01em;
+  margin:10px 0 14px;
+  text-wrap:balance;
+}
+.headline em{font-style:italic;font-weight:400}
+.deck{
+  font-family:var(--serif);font-style:italic;font-size:clamp(17px,1.5vw,21px);line-height:1.4;
+  color:var(--ink-2);margin:0 0 16px;max-width:60ch;text-wrap:pretty;
+}
+.lead .photo.main{aspect-ratio:3/2}
+.lead-cols{
+  columns:2;column-gap:28px;column-rule:1px solid var(--hair);margin-top:18px;
+}
+.lead-cols h3{
+  font-family:var(--display);font-weight:700;font-size:18px;line-height:1.15;margin:0 0 6px;
+  break-after:avoid;
+}
+
+/* countdown box */
+.countdown{
+  border:1px solid var(--rule);padding:16px 18px 18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.35),transparent);
+  position:relative;
+}
+.countdown::before{
+  content:"";position:absolute;inset:4px;border:1px solid var(--rule);pointer-events:none;
+}
+.countdown .kicker{text-align:center;display:block;margin-bottom:10px}
+.countdown h2{
+  font-family:var(--display);font-weight:700;text-align:center;font-size:22px;line-height:1.1;margin:0 0 14px;
+}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.cd-cell{padding:12px 4px 10px;text-align:center;border-right:1px solid var(--hair)}
+.cd-cell:last-child{border-right:0}
+.cd-num{
+  font-family:var(--display);font-weight:700;font-size:clamp(32px,3.4vw,46px);line-height:1;
+  font-variant-numeric:tabular-nums lining-nums;
+  display:block;
+}
+.cd-lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-top:6px;color:var(--ink-2)}
+.countdown .foot{font-size:12.5px;font-family:var(--serif);font-style:italic;text-align:center;color:var(--ink-2);margin:12px 0 0}
+
+.side .photo.tall{aspect-ratio:4/5}
+.side .brief{border-top:1px solid var(--rule);padding-top:10px}
+.side .brief h3{font-family:var(--display);font-weight:700;font-size:17.5px;line-height:1.15;margin:4px 0 6px}
+.side .brief p{font-size:14.5px;margin:0}
+
+/* ============================================================
+   BELOW THE FOLD
+   ============================================================ */
+.fold-strip{
+  margin-top:34px;padding:6px 0;border-top:4px solid var(--rule);border-bottom:1px solid var(--rule);
+  display:flex;gap:28px;justify-content:space-between;align-items:center;
+  font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+}
+.fold-strip .ticker{flex:1;overflow:hidden;white-space:nowrap;position:relative;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.fold-strip .ticker div{display:inline-block;animation:tick 40s linear infinite;padding-left:100%}
+.fold-strip .ticker span{margin-right:40px}
+.fold-strip .ticker span::before{content:"◆";font-size:7px;vertical-align:middle;margin-right:14px;color:var(--red)}
+@keyframes tick{to{transform:translateX(-100%)}}
+
+.section-head{
+  display:flex;align-items:center;gap:16px;margin:30px 0 16px;
+}
+.section-head h2{
+  font-family:var(--display);font-weight:700;font-size:clamp(24px,2.7vw,36px);line-height:1;letter-spacing:-.01em;white-space:nowrap;
+}
+.section-head .line{flex:1;height:1px;background:var(--rule)}
+.section-head .num{font-family:var(--display);font-style:italic;font-size:18px;color:var(--ink-3)}
+
+.spread{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:28px;
+}
+.spread > *{min-width:0}
+.col-4{grid-column:span 4}
+.col-5{grid-column:span 5}
+.col-6{grid-column:span 6}
+.col-7{grid-column:span 7}
+.col-8{grid-column:span 8}
+.col-12{grid-column:span 12}
+.article h3{
+  font-family:var(--display);font-weight:700;font-size:24px;line-height:1.1;margin:0 0 8px;letter-spacing:-.005em;text-wrap:balance;
+}
+.article .byline{margin:0 0 10px}
+.article.boxed{border:1px solid var(--rule);padding:16px 18px}
+
+.pull{
+  font-family:var(--display);font-style:italic;font-weight:400;font-size:22px;line-height:1.25;
+  border-top:3px double var(--rule);border-bottom:1px solid var(--rule);padding:14px 4px;margin:14px 0;text-align:center;text-wrap:balance;
+}
+.pull small{display:block;font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-top:8px;color:var(--ink-2)}
+
+.gallery{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:8px;
+}
+.gallery .photo{aspect-ratio:4/5}
+.gallery .g1{grid-column:span 3}
+.gallery .g2{grid-column:span 3}
+.gallery .g3{grid-column:span 3}
+.gallery .g4{grid-column:span 3}
+.gallery figcaption{margin-top:8px}
+.gallery figure{margin:0}
+.wide{aspect-ratio:21/9}
+.duo{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:30px}
+.duo .photo{height:clamp(300px,36vw,520px);margin:0}
+.duo .duo-cap{grid-column:1/-1;margin-top:0}
+.duo .caption b+b{margin-left:14px}
+
+/* ============================================================
+   THE SONG  (Apple Music style player inside a newspaper ad)
+   ============================================================ */
+.ad{
+  border:1px solid var(--rule);padding:6px;margin-top:8px;
+}
+.ad-inner{border:1px solid var(--rule);padding:18px}
+.ad-label{
+  text-align:center;font-family:var(--sans);font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--ink-3);margin-bottom:12px;
+}
+.player{
+  background:#111113;color:#fff;border-radius:22px;padding:18px;
+  display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif;
+  position:relative;overflow:hidden;
+}
+.player::before{ /* soft ambient glow from the cover */
+  content:"";position:absolute;inset:0;background:radial-gradient(70% 80% at 12% 18%,rgba(255,255,255,.14),transparent 70%);pointer-events:none;
+}
+.player .cover{
+  width:132px;height:132px;border-radius:12px;overflow:hidden;background:#2a2a2e;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);position:relative;transform:scale(.96);transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.player.playing .cover{transform:scale(1)}
+.player .cover img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+.player .cover.missing{display:grid;place-items:center;font-size:10px;text-align:center;padding:10px;color:#aaa;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(160deg,#3a3a40,#1d1d21)}
+.player .cover.missing img{display:none}
+.player .cover.missing::after{content:"Cover art: " attr(data-file)}
+.player .meta{min-width:0;position:relative}
+.player .np{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#a1a1a6;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.player .np .eq{display:inline-flex;gap:2px;align-items:flex-end;height:10px}
+.player .np .eq i{width:2px;background:#fc3c44;height:3px;border-radius:1px}
+.player.playing .np .eq i{animation:eq .8s ease-in-out infinite}
+.player.playing .np .eq i:nth-child(2){animation-delay:.15s}
+.player.playing .np .eq i:nth-child(3){animation-delay:.3s}
+.player.playing .np .eq i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:3px}50%{height:10px}}
+.player .title{font-size:19px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player .artist{font-size:14px;color:#a1a1a6;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player .scrub{margin-top:14px;display:grid;grid-template-columns:36px 1fr 36px;gap:10px;align-items:center;font-size:11px;color:#8e8e93;font-variant-numeric:tabular-nums}
+.player .bar{height:4px;border-radius:2px;background:rgba(255,255,255,.18);position:relative;cursor:pointer}
+.player .bar > i{position:absolute;inset:0 auto 0 0;width:0%;background:#fff;border-radius:2px}
+.player .bar::after{content:"";position:absolute;top:-6px;bottom:-6px;left:0;right:0}
+.player .controls{display:flex;align-items:center;gap:22px;margin-top:12px}
+.player button{
+  appearance:none;border:0;background:transparent;color:#fff;cursor:pointer;padding:0;display:grid;place-items:center;flex:none;
+}
+.player .play{width:46px;height:46px;border-radius:50%;background:#fff;color:#111;transition:transform .15s}
+.player .play:active{transform:scale(.94)}
+.player .play svg{width:20px;height:20px}
+.player .skip svg{width:22px;height:22px;opacity:.9}
+.player .hint{font-size:11px;color:#8e8e93;margin-left:auto;text-align:right;max-width:44%;line-height:1.3}
+.song-note{font-family:var(--serif);font-size:14px;line-height:1.5;margin-top:14px;font-style:italic;color:var(--ink-2)}
+
+/* ============================================================
+   THE CALENDAR
+   ============================================================ */
+.calendar-wrap{
+  border-top:3px double var(--rule);border-bottom:3px double var(--rule);padding:30px 0 34px;
+  display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center;
+}
+.cal-intro .city{
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;text-align:center;color:var(--ink-2);
+}
+.cal-intro .sig{
+  font-family:var(--script);font-size:clamp(56px,6.6vw,92px);line-height:1;text-align:center;
+  margin:6px 0 4px;color:var(--ink);
+  background:linear-gradient(180deg,#2a251e,#0e0c0a);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.35));
+}
+.cal-intro .est{font-family:var(--display);font-style:italic;text-align:center;font-size:17px;color:var(--ink-2)}
+.cal-intro .est b{font-style:normal;font-weight:700;color:var(--ink)}
+.cal-intro .line{width:120px;height:1px;background:var(--rule);margin:16px auto}
+.verse{font-family:var(--serif);font-style:italic;font-size:14.5px;line-height:1.5;color:var(--ink-2);text-align:center;max-width:36ch;margin:18px auto 0}
+.verse.left{text-align:left;margin:0 0 16px}
+.verse small{display:block;font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-3);margin-top:6px}
+
+.calendar{
+  border:1px solid var(--rule);padding:14px 16px 16px;position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.35),transparent);
+}
+.calendar::before{content:"";position:absolute;inset:4px;border:1px solid var(--rule);pointer-events:none}
+.calendar header{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px 8px;border-bottom:1px solid var(--rule)}
+.calendar header h3{font-family:var(--display);font-weight:700;font-size:clamp(24px,2.7vw,34px);letter-spacing:-.01em}
+.calendar header span{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);margin-top:8px}
+.cal-grid .dow{font-family:var(--sans);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;text-align:center;padding:8px 0 6px;border-bottom:1px solid var(--hair);color:var(--ink-2)}
+.cal-grid .d{
+  aspect-ratio:1.15/1;display:grid;place-items:center;position:relative;
+  font-family:var(--display);font-size:clamp(16px,1.7vw,22px);font-weight:400;font-variant-numeric:lining-nums;
+  border-bottom:1px solid var(--hair);border-right:1px solid var(--hair);
+}
+.cal-grid .d:nth-child(7n){border-right:0}
+.cal-grid .d.empty{color:transparent}
+.cal-grid .d.pad{color:var(--ink-3);opacity:.45;font-style:italic}
+.cal-grid .d.mark{font-weight:700;color:var(--red)}
+.cal-grid .d.mark svg{position:absolute;inset:-6% -8%;width:116%;height:112%;overflow:visible;pointer-events:none}
+.cal-grid .d.mark svg path{
+  fill:none;stroke:var(--red);stroke-width:2.6;stroke-linecap:round;
+  stroke-dasharray:420;stroke-dashoffset:420;
+}
+.cal-grid .d.mark.drawn svg path{animation:draw 1.3s cubic-bezier(.4,0,.2,1) forwards}
+.cal-grid .d.mark.drawn svg path:nth-child(2){animation-delay:.25s;animation-duration:1.1s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.cal-note{margin-top:10px;font-family:var(--serif);font-size:12.5px;font-style:italic;color:var(--ink-2);display:flex;justify-content:space-between;gap:12px}
+.cal-note b{color:var(--red);font-style:normal}
+
+/* ============================================================
+   RSVP  (clip and return)
+   ============================================================ */
+.rsvp{
+  margin-top:34px;position:relative;
+  border:2px dashed var(--ink-2);padding:6px;
+}
+.rsvp .scissors{
+  position:absolute;top:-13px;left:34px;background:var(--paper);padding:0 8px;font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-2);
+  display:flex;align-items:center;gap:8px;
+}
+.rsvp .scissors svg{width:18px;height:18px}
+.rsvp-inner{border:1px solid var(--rule);padding:clamp(20px,3vw,40px);display:grid;grid-template-columns:1fr 1.2fr;gap:40px}
+.rsvp-copy h2{
+  font-family:var(--display);font-weight:700;font-size:clamp(30px,4vw,54px);line-height:1.02;letter-spacing:-.012em;margin:6px 0 14px;text-wrap:balance;
+}
+.rsvp-copy h2 em{font-style:italic;font-weight:400;color:var(--red)}
+.rsvp-copy p{font-size:16px;line-height:1.55;max-width:44ch}
+.rsvp-copy .details{margin-top:18px;border-top:1px solid var(--rule);font-size:14.5px}
+.rsvp-copy .details div{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--hair)}
+.rsvp-copy .details div span:first-child{font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink-2);padding-top:3px}
+
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-family:var(--sans);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
+.field input,.field select,.field textarea{
+  appearance:none;border:0;border-bottom:1px solid var(--rule);background:transparent;border-radius:0;
+  font:400 17px/1.4 var(--serif);color:var(--ink);padding:8px 0;outline:0;width:100%;
+  transition:border-color .2s,box-shadow .2s;
+}
+.field textarea{resize:vertical;min-height:70px}
+.field input:focus,.field select:focus,.field textarea:focus{border-bottom:1px solid var(--red);box-shadow:0 1px 0 var(--red)}
+.field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23151310' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 2px center;padding-right:20px;
+}
+.seg{display:flex;border:1px solid var(--rule);overflow:hidden}
+.seg label{flex:1;display:block;cursor:pointer;position:relative}
+.seg label span{display:block;text-align:center;padding:12px 8px;font-family:var(--display);font-size:15px;font-weight:700;letter-spacing:.02em;transition:background .2s,color .2s}
+.seg label + label span{border-left:1px solid var(--rule)}
+.seg input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer;margin:0}
+.seg input:checked + span{background:var(--ink);color:var(--paper)}
+.seg input:focus-visible + span{outline:2px solid var(--red);outline-offset:-4px}
+.submit{
+  grid-column:1/-1;margin-top:6px;
+  appearance:none;border:0;cursor:pointer;
+  background:var(--red);color:#fff;
+  font-family:var(--sans);font-weight:600;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;
+  padding:20px 24px;position:relative;overflow:hidden;
+  transition:background .2s,transform .15s;
+}
+.submit::before{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.55);pointer-events:none}
+.submit:hover{background:var(--red-2)}
+.submit:active{transform:translateY(1px)}
+.submit[disabled]{opacity:.6;cursor:progress}
+.form-note{grid-column:1/-1;font-size:12.5px;font-style:italic;color:var(--ink-2);margin:0}
+.form-status{grid-column:1/-1;font-size:15px;min-height:1.2em}
+.form-status.ok{color:var(--ink);font-family:var(--display);font-style:italic;font-size:20px}
+.form-status.err{color:var(--red)}
+.thanks{display:none;text-align:center;padding:30px 10px}
+.thanks h3{font-family:var(--display);font-weight:700;font-size:clamp(30px,4vw,48px);line-height:1;margin-bottom:10px}
+.thanks p{font-style:italic;color:var(--ink-2)}
+.thanks .stamp{
+  display:inline-block;margin-top:14px;border:2px solid var(--red);color:var(--red);padding:6px 14px;
+  font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;transform:rotate(-4deg);
+}
+
+/* ============================================================
+   FOOTER / COLOPHON
+   ============================================================ */
+.colophon{
+  margin-top:40px;border-top:3px double var(--rule);padding:18px 0 0;
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-2);
+}
+.colophon .sig{font-family:var(--script);font-size:34px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--ink);line-height:1}
+
+/* ---------- reveal on scroll ---------- */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .fold-strip .ticker div{animation:none;padding-left:0}
+  .cal-grid .d.mark svg path{stroke-dashoffset:0;animation:none}
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1000px){
+  .front{grid-template-columns:minmax(0,1fr)}
+  .front .lead,.front .side{min-width:0;max-width:100%}
+  .front .lead{padding-right:0;border-right:0}
+  .front .side{padding-left:0;margin-top:26px;display:grid;grid-template-columns:1fr 1fr;align-items:start}
+  .side .countdown{grid-column:1/-1}
+  .calendar-wrap{grid-template-columns:minmax(0,1fr)}
+  .rsvp-inner{grid-template-columns:minmax(0,1fr)}
+  .rsvp-inner > *,.calendar-wrap > *{min-width:0}
+  .col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 12}
+  .gallery .g1,.gallery .g2,.gallery .g3,.gallery .g4{grid-column:span 6}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  .masthead{grid-template-columns:1fr;gap:10px;padding:18px 0 12px}
+  .masthead .ear{display:none}
+  .masthead h1{font-size:clamp(42px,14vw,60px);white-space:normal;line-height:.95}
+  .masthead h1 .the{display:block;font-size:.5em;margin:0 0 -.1em}
+  .topbar span.hide-m,.dateline-bar span.hide-m,.topbar .mid{display:none}
+  .topbar{font-size:10px;letter-spacing:.14em}
+  .dateline-bar{font-size:10px;letter-spacing:.14em}
+  .headline{font-size:clamp(30px,8.6vw,42px)}
+  .lead-cols{columns:1}
+  .front .side{grid-template-columns:minmax(0,1fr)}
+  .kicker{letter-spacing:.14em;font-size:10px}
+  .cd-lab{letter-spacing:.14em}
+  .cd-num{font-size:34px}
+  .player{grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px;border-radius:18px}
+  .player .cover{width:84px;height:84px}
+  .player .title{font-size:16px;line-height:1.2;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .player .scrub{margin-top:10px;grid-template-columns:32px 1fr 32px;gap:8px}
+  .player .controls{gap:16px;margin-top:10px}
+  .player button,.player .play{flex:none}
+  .player .play{width:44px;height:44px}
+  .player .hint{display:none}
+  .spread{gap:24px}
+  .duo{grid-template-columns:minmax(0,1fr)}
+  .duo .photo{height:auto;aspect-ratio:4/3}
+  .duo .photo + .photo{aspect-ratio:4/5}
+  form{grid-template-columns:minmax(0,1fr)}
+  .rsvp-copy .details div{grid-template-columns:1fr}
+  .cal-grid .d{font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<main class="sheet">
+
+  <!-- ================= EARS ================= -->
+  <div class="topbar">
+    <span>Vol. I · No. 1</span>
+    <span class="mid">"All the love that's fit to print."</span>
+    <span class="hide-m">Weather: Sunny, with a chance of forever</span>
+    <span>Priceless</span>
+  </div>
+
+  <!-- ================= MASTHEAD ================= -->
+  <header class="masthead">
+    <div class="ear left">
+      <p>Special<br>Wedding Edition</p>
+      <small>Keepsake copy</small>
+    </div>
+    <h1><span class="the">The</span>Robinson Chronicle</h1>
+    <div class="ear right">
+      <p>Save the Date</p>
+      <small data-cfg="dateShort">March 6, 2027</small>
+    </div>
+  </header>
+  <div class="dateline-bar">
+    <span data-cfg="dateLong">Saturday, March 6, 2027</span>
+    <span class="motto hide-m">Printed with love, read with joy</span>
+    <span data-cfg="destinationCity">Destination City</span>
+  </div>
+
+  <!-- ================= FRONT PAGE ================= -->
+  <section class="front" id="top">
+    <div class="lead">
+      <span class="kicker red">Extra · Extra · Read all about it</span>
+      <h2 class="headline">Robinsons to Wed Abroad, <em>Celebrate</em> at Home</h2>
+      <p class="deck">Two hearts, one name. The soon-to-be Mr. and Mrs. Robinson will exchange vows in <span data-cfg="destinationCity">Destination City</span> and invite the people they love most to celebrate with them upon their return.</p>
+
+      <figure class="photo main" data-file="img/03-driftwood-smiling.jpg">
+        <img src="img/03-driftwood-smiling.jpg" alt="The couple smiling together beside sun-bleached driftwood at the water's edge.">
+      </figure>
+      <p class="caption"><b>Above</b> The couple, photographed on the shore where the story of this edition begins. Love, it turns out, photographs beautifully in black and white.</p>
+
+      <div class="lead-cols body-copy">
+        <h3>A Union Worth the Trip</h3>
+        <p class="dropcap">In a ceremony set against the sea, two families will become one. For those who cannot make the journey abroad, the Robinsons have good news: the celebration is coming home. A reception in their honor will gather church family, friends, and loved ones for an evening of dinner, fellowship, and the kind of well-wishes that run a little long because there is simply too much to say.</p>
+        <p>This special edition serves as your official save the date. Fold it, frame it, or pin it to the refrigerator. Then turn to the final page and let the couple know you will be there.</p>
+        <h3>What to Expect</h3>
+        <p>An evening built around the two things every good celebration needs: good people and a grateful heart. Expect a warm welcome, a full table, joyful music, and a couple who will want to greet every single person in the room.</p>
+        <p>Attire is <span data-cfg="dressCode">semi-formal</span>. Think linen, florals, and sea breeze. Full details, including the venue and time, are printed in the reply section below.</p>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="countdown rv" aria-live="off">
+        <span class="kicker">Official Count</span>
+        <h2>Days Until We Celebrate</h2>
+        <div class="cd-grid" id="countdown">
+          <div class="cd-cell"><span class="cd-num" id="cd-d">000</span><span class="cd-lab">Days</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-h">00</span><span class="cd-lab">Hours</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-m">00</span><span class="cd-lab">Minutes</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-s">00</span><span class="cd-lab">Seconds</span></div>
+        </div>
+        <p class="foot" id="cd-foot">Counting down to <span data-cfg="dateLong">Saturday, March 6, 2027</span></p>
+      </div>
+
+      <figure class="photo tall rv" data-file="img/09-kiss.jpg">
+        <img src="img/09-kiss.jpg" alt="The couple sharing a kiss with the ocean behind them.">
+      </figure>
+      <p class="caption rv"><b>Sealed</b> A kiss by the water, and a promise made to keep.</p>
+
+      <div class="brief rv">
+        <span class="kicker red">Inside this edition</span>
+        <h3>The song, the date, and how to reply</h3>
+        <p>Press play on the couple's song, find the date circled on the calendar, and clip the reply card at the end of the page. It takes less than a minute.</p>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ================= FOLD ================= -->
+  <div class="fold-strip">
+    <span>Continued</span>
+    <div class="ticker" aria-hidden="true"><div>
+      <span>Save the date: <span data-cfg="dateLong">Saturday, March 6, 2027</span></span>
+      <span>Ceremony abroad in <span data-cfg="destinationCity">Destination City</span></span>
+      <span>Reception at home for friends and family</span>
+      <span>Reply by <span data-cfg="rsvpDeadline">January 31, 2027</span></span>
+      <span>Attire: <span data-cfg="dressCode">semi-formal</span></span>
+      <span>Save the date: <span data-cfg="dateLong">Saturday, March 6, 2027</span></span>
+      <span>Ceremony abroad in <span data-cfg="destinationCity">Destination City</span></span>
+      <span>Reception at home for friends and family</span>
+      <span>Reply by <span data-cfg="rsvpDeadline">January 31, 2027</span></span>
+      <span>Attire: <span data-cfg="dressCode">semi-formal</span></span>
+    </div></div>
+    <span>Page 2</span>
+  </div>
+
+  <!-- ================= SOCIETY PAGE ================= -->
+  <div class="section-head rv">
+    <span class="num">§ 2</span>
+    <h2>Society Pages</h2>
+    <span class="line"></span>
+    <span class="kicker">Photographs from the shore</span>
+  </div>
+
+  <div class="spread">
+    <figure class="col-8 photo wide rv" data-file="img/01-fence-lookout.jpg">
+      <img src="img/01-fence-lookout.jpg" alt="The couple standing at a beach fence, looking out over the water together.">
+    </figure>
+    <article class="col-4 article rv">
+      <span class="kicker red">Editorial</span>
+      <h3>Looking in the Same Direction</h3>
+      <p class="byline">From the Society Desk <span class="dateline">· By the Sea</span></p>
+      <div class="body-copy">
+        <p class="dropcap">Two are better than one, the Preacher wrote, because they have a good reward for their labour. There is a certain way two people stand when they have already decided on forever. Shoulders close. Eyes fixed on the same horizon. The photographs in this edition were not staged so much as caught.</p>
+        <p>What follows is a record of one afternoon on the shore, and the beginning of a much longer story.</p>
+      </div>
+      <div class="pull">"Whither thou goest, I will go; and where thou lodgest, I will lodge."<small>Ruth 1:16</small></div>
+    </article>
+  </div>
+
+  <div class="gallery rv">
+    <figure class="g1"><div class="photo" data-file="img/05-walking-beach.jpg"><img src="img/05-walking-beach.jpg" alt="The couple walking barefoot along the sand, hand in hand."></div><figcaption class="caption"><b>Fig. 1</b> Barefoot, hand in hand.</figcaption></figure>
+    <figure class="g2"><div class="photo" data-file="img/02-embrace-driftwood.jpg"><img src="img/02-embrace-driftwood.jpg" alt="The bride looking over the groom's shoulder during an embrace."></div><figcaption class="caption"><b>Fig. 2</b> A glance over the shoulder.</figcaption></figure>
+    <figure class="g3"><div class="photo" data-file="img/07-cheek-hold.jpg"><img src="img/07-cheek-hold.jpg" alt="The bride resting her hand on the groom's cheek."></div><figcaption class="caption"><b>Fig. 3</b> The ring, the hand, the cheek.</figcaption></figure>
+    <figure class="g4"><div class="photo" data-file="img/10-gazing-shore.jpg"><img src="img/10-gazing-shore.jpg" alt="The couple standing close, gazing toward the water."></div><figcaption class="caption"><b>Fig. 4</b> Toward the water, toward the future.</figcaption></figure>
+  </div>
+
+  <!-- ================= THE SONG ================= -->
+  <div class="section-head rv">
+    <span class="num">§ 3</span>
+    <h2>Now Playing</h2>
+    <span class="line"></span>
+    <span class="kicker">The couple's song</span>
+  </div>
+
+  <div class="spread">
+    <div class="col-7 rv">
+      <div class="ad">
+        <div class="ad-inner">
+          <div class="ad-label">A message from the couple · Press play</div>
+          <div class="player" id="player">
+            <div class="cover" id="cover" data-file="img/08-almost-kiss.jpg"><img src="img/08-almost-kiss.jpg" alt="" id="coverImg"></div>
+            <div class="meta">
+              <div class="np"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="npLabel">Our Song</span></div>
+              <div class="title" data-cfg="songTitle">I Found My Forever in You</div>
+              <div class="artist" data-cfg="songArtist">Love in Lyricz</div>
+              <div class="scrub">
+                <span id="tCur">0:00</span>
+                <div class="bar" id="bar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><i id="fill"></i></div>
+                <span id="tDur">0:00</span>
+              </div>
+              <div class="controls">
+                <button class="skip" id="back" aria-label="Back 10 seconds"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 5L4 12l7 7v-4.5c4 0 6.5 1.5 8 4.5-.5-5-3.5-9-8-9.5V5z"/></svg></button>
+                <button class="play" id="play" aria-label="Play"><svg viewBox="0 0 24 24" fill="currentColor" id="playIcon"><path d="M7 4.5v15l12-7.5z"/></svg></button>
+                <button class="skip" id="fwd" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 5l7 7-7 7v-4.5c-4 0-6.5 1.5-8 4.5.5-5 3.5-9 8-9.5V5z"/></svg></button>
+                <span class="hint" id="hint">Tap play to hear the song that started it all.</span>
+              </div>
+            </div>
+            <audio id="audio" preload="metadata" data-cfg-src="songSrc"></audio>
+          </div>
+          <p class="song-note" data-cfg="songNote">Every couple has a song. This is theirs. Turn it up.</p>
+        </div>
+      </div>
+    </div>
+    <article class="col-5 article boxed rv">
+      <span class="kicker red">Arts &amp; Music</span>
+      <h3>On the Record</h3>
+      <p class="byline">Music Desk</p>
+      <div class="body-copy">
+        <p class="dropcap">Ask any couple and they will tell you: there is one song that belongs to them. It played on a first date, or a long drive, or a quiet evening at home. The Robinsons have chosen theirs, and they would like you to hear it.</p>
+        <p>Consider it a preview. Expect to hear it again, in full, on the evening of the celebration.</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="duo rv">
+    <figure class="photo" data-file="img/04-backs-ocean.jpg"><img src="img/04-backs-ocean.jpg" alt="The couple from behind, arms around each other, facing the open water."></figure>
+    <figure class="photo" data-file="img/06-wading.jpg"><img src="img/06-wading.jpg" alt="The couple stepping into the shallows together."></figure>
+    <p class="caption duo-cap"><b>Left</b> Facing the water together. <b>Right</b> Into the shallows, shoes long abandoned.</p>
+  </div>
+
+  <!-- ================= THE CALENDAR ================= -->
+  <div class="section-head rv">
+    <span class="num">§ 4</span>
+    <h2>Mark the Date</h2>
+    <span class="line"></span>
+    <span class="kicker">Circle it in red</span>
+  </div>
+
+  <div class="calendar-wrap rv">
+    <div class="cal-intro">
+      <div class="city" data-cfg="destinationCity">Destination City</div>
+      <div class="sig" data-cfg="coupleName">The Robinsons</div>
+      <div class="line"></div>
+      <div class="est">Established <b data-cfg="dateLong">Saturday, March 6, 2027</b></div>
+      <p class="verse">"This is the day which the LORD hath made; we will rejoice and be glad in it."<small>Psalm 118:24</small></p>
+    </div>
+    <div class="calendar" id="calendar">
+      <header>
+        <h3 id="calMonth">March</h3>
+        <span id="calYear">2027</span>
+      </header>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-note"><span>Circled in red: <b data-cfg="dateShort">March 6, 2027</b></span><span data-cfg="destinationCity">Destination City</span></div>
+    </div>
+  </div>
+
+  <!-- ================= RSVP ================= -->
+  <div class="section-head rv">
+    <span class="num">§ 5</span>
+    <h2>Reply Card</h2>
+    <span class="line"></span>
+    <span class="kicker">Clip and return</span>
+  </div>
+
+  <section class="rsvp rv" id="rsvp">
+    <div class="scissors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5L20 19M8.5 16.5L20 5"/></svg> Clip and return</div>
+    <div class="rsvp-inner">
+      <div class="rsvp-copy">
+        <span class="kicker red">Répondez s'il vous plaît</span>
+        <h2>Will you <em>join&nbsp;us</em> for the celebration?</h2>
+        <p class="verse left">"Rejoice with them that do rejoice."<small>Romans 12:15</small></p>
+        <p>Kindly reply by <span data-cfg="rsvpDeadline">January 31, 2027</span> so the couple can set the table and count the chairs. One reply per household is perfect.</p>
+        <div class="details">
+          <div><span>Occasion</span><span>Reception in honor of <span data-cfg="coupleFormal">Mr. and Mrs. Robinson</span></span></div>
+          <div><span>Date</span><span data-cfg="receptionDate">To be announced</span></div>
+          <div><span>Venue</span><span data-cfg="receptionVenue">To be announced</span></div>
+          <div><span>Attire</span><span data-cfg="dressCodeCap">Cocktail</span></div>
+        </div>
+      </div>
+
+      <div>
+        <form id="rsvpForm" novalidate>
+          <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" required placeholder="First and last name"></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+          <div class="field full">
+            <label>Attending</label>
+            <div class="seg">
+              <label><input type="radio" name="attending" value="Joyfully accepts" checked><span>Joyfully accepts</span></label>
+              <label><input type="radio" name="attending" value="Regretfully declines"><span>Regretfully declines</span></label>
+            </div>
+          </div>
+          <div class="field"><label for="guests">Guests in your party</label>
+            <select id="guests" name="guests"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+          </div>
+          <div class="field"><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(000) 000-0000"></div>
+          <div class="field full"><label for="note">A note for the couple</label><textarea id="note" name="note" placeholder="Dietary needs, song requests, or a few kind words"></textarea></div>
+          <p class="form-note">Your reply goes straight to the couple. No account, no app, no fuss.</p>
+          <button class="submit" type="submit" id="submitBtn">Send my reply</button>
+          <div class="form-status" id="formStatus" aria-live="polite"></div>
+        </form>
+        <div class="thanks" id="thanks">
+          <h3>Reply Received</h3>
+          <p>Thank you. <span data-cfg="coupleFormal">Mr. and Mrs. Robinson</span> will be so glad to see your name on the list.</p>
+          <span class="stamp">Received with love</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COLOPHON ================= -->
+  <footer class="colophon">
+    <span>The Robinson Chronicle · Vol. I · No. 1</span>
+    <span class="sig" data-cfg="coupleName">The Robinsons</span>
+    <span data-cfg="dateShort">March 6, 2027</span>
+  </footer>
+
+</main>
+
+<script>
+/* ============================================================
+   EDIT EVERYTHING HERE. Nothing else in the file needs touching.
+   ============================================================ */
+const CONFIG = {
+  coupleName:      "The Robinsons",
+  coupleFormal:    "Mr. and Mrs. Robinson",       // how the couple is addressed in the reply card and thank-you
+  eventDate:       "2027-03-06T16:00:00",     // the save-the-date moment the countdown targets (local time)
+  destinationCity: "Destination City",        // TODO: where the ceremony happens, shown above the calendar
+  receptionDate:   "",                        // e.g. "Saturday, March 20, 2027 · 6:00 PM"  (blank = "To be announced")
+  receptionVenue:  "",                        // e.g. "The Grand Hall, 123 Main St, Tampa, FL"
+  dressCode:       "semi-formal",
+  rsvpDeadline:    "January 31, 2027",
+
+  // The song. Drop the file in /audio and set the title and artist.
+  songTitle:  "I Found My Forever in You",
+  songArtist: "Love in Lyricz",
+  songSrc:    "audio/our-song.mp3?v=2",     // bump ?v= whenever the file changes so browsers refetch it
+  songNote:   "Every couple has a song. This is theirs. Turn it up.",
+
+  // Where replies go. Option A: a Formspree/Basin style endpoint that accepts a JSON POST.
+  // Option B: leave blank and set rsvpEmail; replies open a prefilled email instead.
+  rsvpEndpoint: "",
+  rsvpEmail:    "",
+};
+
+/* ---------- helpers ---------- */
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const pad = (n,w=2)=>String(n).padStart(w,"0");
+const eventDate = new Date(CONFIG.eventDate);
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DOWS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+const derived = {
+  ...CONFIG,
+  dateShort: `${MONTHS[eventDate.getMonth()]} ${eventDate.getDate()}, ${eventDate.getFullYear()}`,
+  dateLong:  `${DOWS[eventDate.getDay()]}, ${MONTHS[eventDate.getMonth()]} ${eventDate.getDate()}, ${eventDate.getFullYear()}`,
+  dressCodeCap: CONFIG.dressCode.charAt(0).toUpperCase()+CONFIG.dressCode.slice(1),
+  receptionDate: CONFIG.receptionDate || "To be announced",
+  receptionVenue: CONFIG.receptionVenue || "To be announced",
+};
+$$("[data-cfg]").forEach(el=>{ const v=derived[el.dataset.cfg]; if(v!==undefined) el.textContent=v; });
+$$("[data-cfg-src]").forEach(el=>{ el.src = CONFIG[el.dataset.cfgSrc]; });
+document.title = `${CONFIG.coupleName} · Save the Date · ${derived.dateShort}`;
+
+/* ---------- missing photo fallbacks ---------- */
+$$(".photo img, .player .cover img").forEach(img=>{
+  const mark=()=>img.closest(".photo, .cover").classList.add("missing");
+  img.addEventListener("error",mark);
+  if(img.complete && img.naturalWidth===0) mark();
+});
+
+/* ---------- countdown ---------- */
+(function(){
+  const d=$("#cd-d"),h=$("#cd-h"),m=$("#cd-m"),s=$("#cd-s"),foot=$("#cd-foot");
+  function tick(){
+    let diff=eventDate-Date.now();
+    if(diff<=0){ d.textContent="000";h.textContent=m.textContent=s.textContent="00"; foot.textContent="The day is here. Congratulations, "+CONFIG.coupleFormal+"."; return; }
+    const D=Math.floor(diff/864e5); diff-=D*864e5;
+    const H=Math.floor(diff/36e5);  diff-=H*36e5;
+    const M=Math.floor(diff/6e4);   diff-=M*6e4;
+    const S=Math.floor(diff/1e3);
+    d.textContent=pad(D,3);h.textContent=pad(H);m.textContent=pad(M);s.textContent=pad(S);
+  }
+  tick(); setInterval(tick,1000);
+})();
+
+/* ---------- calendar ---------- */
+(function(){
+  const y=eventDate.getFullYear(), mo=eventDate.getMonth(), day=eventDate.getDate();
+  $("#calMonth").textContent=MONTHS[mo]; $("#calYear").textContent=y;
+  const grid=$("#calGrid");
+  ["S","M","T","W","T","F","S"].forEach(t=>{const e=document.createElement("div");e.className="dow";e.textContent=t;grid.appendChild(e);});
+  const first=new Date(y,mo,1).getDay();
+  const dim=new Date(y,mo+1,0).getDate();
+  const prevDim=new Date(y,mo,0).getDate();
+  for(let i=first-1;i>=0;i--){const e=document.createElement("div");e.className="d pad";e.textContent=prevDim-i;grid.appendChild(e);}
+  for(let n=1;n<=dim;n++){
+    const e=document.createElement("div");e.className="d";e.textContent=n;
+    if(n===day){
+      e.classList.add("mark");
+      // two loose hand-drawn loops of red ink
+      e.insertAdjacentHTML("beforeend",
+        `<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M52 12 C 78 8, 96 26, 92 52 C 88 80, 60 94, 34 88 C 10 82, 2 58, 10 36 C 18 16, 40 10, 60 14"/>
+          <path d="M60 14 C 84 20, 94 44, 86 64 C 78 84, 50 92, 28 82 C 8 72, 6 44, 20 26"/>
+        </svg>`);
+      e.setAttribute("aria-label",`${MONTHS[mo]} ${day}, ${y}, circled`);
+    }
+    grid.appendChild(e);
+  }
+  const total=first+dim, rem=(7-total%7)%7;
+  for(let n=1;n<=rem;n++){const e=document.createElement("div");e.className="d pad";e.textContent=n;grid.appendChild(e);}
+  const mark=$(".cal-grid .mark");
+  new IntersectionObserver((es,o)=>{es.forEach(x=>{if(x.isIntersecting){setTimeout(()=>mark.classList.add("drawn"),250);o.disconnect();}})},{threshold:.6}).observe(mark);
+})();
+
+/* ---------- player ---------- */
+(function(){
+  const audio=$("#audio"), player=$("#player"), play=$("#play"), icon=$("#playIcon"),
+        fill=$("#fill"), bar=$("#bar"), cur=$("#tCur"), dur=$("#tDur"), hint=$("#hint"), np=$("#npLabel");
+  const PLAY='<path d="M7 4.5v15l12-7.5z"/>', PAUSE='<path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/>';
+  const fmt=t=>isFinite(t)?`${Math.floor(t/60)}:${pad(Math.floor(t%60))}`:"0:00";
+  let ready=false, failed=false;
+  audio.addEventListener("loadedmetadata",()=>{ready=true;dur.textContent=fmt(audio.duration);});
+  audio.addEventListener("error",()=>{failed=true;hint.textContent=`Add the song file at ${CONFIG.songSrc} to enable playback.`;np.textContent="Song not loaded";});
+  audio.addEventListener("timeupdate",()=>{
+    const p=audio.duration?audio.currentTime/audio.duration*100:0;
+    fill.style.width=p+"%";cur.textContent=fmt(audio.currentTime);bar.setAttribute("aria-valuenow",Math.round(p));
+  });
+  audio.addEventListener("play",()=>{player.classList.add("playing");icon.innerHTML=PAUSE;play.setAttribute("aria-label","Pause");np.textContent="Now playing";});
+  audio.addEventListener("pause",()=>{player.classList.remove("playing");icon.innerHTML=PLAY;play.setAttribute("aria-label","Play");np.textContent=audio.currentTime>0?"Paused":"Our Song";});
+  audio.addEventListener("ended",()=>{audio.currentTime=0;});
+  play.addEventListener("click",()=>{
+    if(failed){hint.style.color="#fc3c44";return;}
+    audio.paused?audio.play().catch(()=>{}):audio.pause();
+  });
+  $("#back").addEventListener("click",()=>{audio.currentTime=Math.max(0,audio.currentTime-10);});
+  $("#fwd").addEventListener("click",()=>{audio.currentTime=Math.min(audio.duration||0,audio.currentTime+10);});
+  const seek=e=>{ if(!audio.duration) return; const r=bar.getBoundingClientRect(); const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left; audio.currentTime=Math.min(Math.max(x/r.width,0),1)*audio.duration; };
+  bar.addEventListener("click",seek);
+  bar.addEventListener("keydown",e=>{ if(e.key==="ArrowRight"){audio.currentTime+=5;} if(e.key==="ArrowLeft"){audio.currentTime-=5;} });
+})();
+
+/* ---------- reveal on scroll ---------- */
+(function(){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+  $$(".rv").forEach(el=>io.observe(el));
+})();
+
+/* ---------- RSVP ---------- */
+(function(){
+  const form=$("#rsvpForm"), status=$("#formStatus"), btn=$("#submitBtn"), thanks=$("#thanks");
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    status.className="form-status";status.textContent="";
+    const data=Object.fromEntries(new FormData(form).entries());
+    if(!data.name.trim()||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)){
+      status.className="form-status err";status.textContent="Please add your name and a valid email so the couple can reach you.";return;
+    }
+    data.couple=CONFIG.coupleName; data.event=derived.dateLong;
+    if(CONFIG.rsvpEndpoint){
+      btn.disabled=true;btn.textContent="Sending";
+      try{
+        const r=await fetch(CONFIG.rsvpEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});
+        if(!r.ok) throw new Error(r.status);
+        form.style.display="none";thanks.style.display="block";
+      }catch(err){
+        status.className="form-status err";status.textContent="Something went wrong sending your reply. Please try again in a moment.";
+        btn.disabled=false;btn.textContent="Send my reply";
+      }
+    }else if(CONFIG.rsvpEmail){
+      const body=Object.entries(data).map(([k,v])=>`${k}: ${v}`).join("\n");
+      location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent("RSVP: "+data.name+" · "+data.attending)}&body=${encodeURIComponent(body)}`;
+      form.style.display="none";thanks.style.display="block";
+    }else{
+      status.className="form-status err";status.textContent="The reply card is not connected yet. Set rsvpEndpoint or rsvpEmail in the page config.";
+    }
+  });
+})();
+</script>
+</body>
+</html>
