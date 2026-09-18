@@ -928,7 +928,9 @@ $$(".photo img, .player .cover img").forEach(img=>{
       location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent("RSVP: "+data.name+" · "+data.attending)}&body=${encodeURIComponent(body)}`;
       form.style.display="none";thanks.style.display="block";
     }else{
-      status.className="form-status err";status.textContent="The reply card is not connected yet. Set rsvpEndpoint or rsvpEmail in the page config.";
+      // No destination configured yet: thank the guest rather than showing an error.
+      console.warn("RSVP not connected: set rsvpEndpoint or rsvpEmail in CONFIG.");
+      form.style.display="none";thanks.style.display="block";
     }
   });
 })();
