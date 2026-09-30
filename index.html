@@ -281,7 +281,7 @@ section[id]{scroll-margin-top:var(--navh)}
    ============================================================ */
 .aruba{background:var(--cream-2)}
 .aruba .top{height:min(88svh,820px);position:relative;overflow:hidden;background:var(--emerald-deep)}
-.aruba .top img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:50% 45%;filter:grayscale(1) contrast(1.02)}
+.aruba .top img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:50% 20%;filter:grayscale(1) contrast(1.02)}
 .aruba .top::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,21,18,.15),rgba(14,21,18,.55))}
 .aruba .top .over{position:absolute;left:var(--gutter);right:var(--gutter);bottom:clamp(36px,6vw,72px);color:var(--cream);z-index:1}
 .aruba .coords{font-family:var(--sans);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--orange-soft)}
@@ -729,7 +729,7 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
 <!-- ================= ARUBA ================= -->
 <section class="aruba" id="aruba">
   <div class="top" data-parallax>
-    <img src="img/06-wading.jpg" alt="The couple stepping into the shallows together." loading="lazy">
+    <img src="img/04-backs-ocean.jpg" alt="The couple from behind, arms around each other, looking out over open water." loading="lazy">
     <div class="over">
       <div class="coords">Destination &nbsp;12.5211° N, 69.9683° W</div>
       <span class="word">Aruba</span>
@@ -847,7 +847,7 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
         <span class="eyebrow light">Take Your Seat</span>
         <h2 class="h2">The Robinsons have <em>reserved</em> a seat for you.</h2>
         <div class="copy">
-          <p>Find your invitation by name and let us know you are coming. Kindly reply by <span data-cfg="rsvpDeadline">January 31, 2027</span>. One reply per household is perfect.</p>
+          <p>Let us know you are coming. Kindly reply by <span data-cfg="rsvpDeadline">January 31, 2027</span>. One reply per household is perfect.</p>
         </div>
         <ul class="details">
           <li><span>Ceremony</span><span><span data-cfg="dateLong">Saturday, March 6, 2027</span> · <span data-cfg="destinationCity">Aruba</span></span></li>
@@ -858,30 +858,28 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
       </div>
 
       <div class="card-form rv d1" id="rsvpCard">
-        <div class="step on" id="s-find">
-          <p class="k">Find your invitation</p>
-          <h3 class="t">Who is <b>taking a seat?</b></h3>
-          <p class="sub">Enter the first and last name of anyone on your invitation.</p>
-          <form id="findForm" novalidate>
-            <div class="field"><label for="findName">First and last name</label><input id="findName" type="text" autocomplete="name" placeholder="e.g. Jordan Sample" required></div>
-            <div class="actions"><button class="btn fill" type="submit">Find my invitation</button></div>
-            <div class="form-status" id="findStatus" aria-live="polite"></div>
-          </form>
-        </div>
-
-        <div class="step" id="s-reply">
+        <div class="step on" id="s-reply">
           <form id="rsvpForm" novalidate>
-            <div class="seat-card">
-              <div><div class="h">Welcome, <b id="hhName">Guest</b>.</div><div class="s" id="hhSeats">We have reserved 2 seats in your honor.</div></div>
-              <div class="no">02</div>
+            <p class="k">Take your seat</p>
+            <h3 class="t">Who is <b>joining us?</b></h3>
+            <div class="two">
+              <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" required placeholder="First and last name"></div>
+              <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
             </div>
-            <p class="k" id="qAttend">Will you be joining us?</p>
+            <p class="k" style="margin-top:6px">Will you be joining us?</p>
             <div class="seg" style="margin-bottom:22px">
               <label><input type="radio" name="attending" value="Joyfully accepts" checked><span>Joyfully accepts</span></label>
               <label><input type="radio" name="attending" value="Regretfully declines"><span>Regretfully declines</span></label>
             </div>
             <div id="acceptOnly">
-              <div class="group" id="gGuests"><p class="k">Guests on your invitation</p><div class="checks" id="guestChecks"></div></div>
+              <div class="group">
+                <p class="k">Your party</p>
+                <div class="two">
+                  <div class="field"><label for="guests">Seats in your party</label><select id="guests" name="guests"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+                  <div class="field"><label for="where">Celebrating with us</label><select id="where" name="celebrating"><option>In Aruba</option><option>At the celebration at home</option><option>Both</option></select></div>
+                </div>
+                <div class="field"><label for="names">Names of everyone attending</label><input id="names" name="guest_names" type="text" placeholder="e.g. Jordan and Taylor Sample"></div>
+              </div>
               <div class="group" id="gEvents"><p class="k">Joining us for</p><div class="checks" id="eventChecks"></div></div>
               <div class="group" id="gTravel">
                 <p class="k">Travel</p>
@@ -890,29 +888,20 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
                   <div class="field"><label for="hotel">Hotel</label><select id="hotel" name="hotel"><option>Booked at the group hotel</option><option>Not booked yet</option><option>Staying elsewhere</option></select></div>
                 </div>
               </div>
-              <div class="group" id="gMeal">
+              <div class="group">
                 <p class="k">At the table</p>
                 <div class="two">
                   <div class="field"><label for="meal">Meal preference</label><select id="meal" name="meal"></select></div>
                   <div class="field"><label for="diet">Dietary needs</label><input id="diet" name="dietary" type="text" placeholder="Allergies or restrictions"></div>
                 </div>
-              </div>
-              <div class="group">
-                <p class="k">One more thing</p>
                 <div class="field"><label for="songReq">A song that will get you to the dance floor</label><input id="songReq" name="song_request" type="text" placeholder="Optional"></div>
               </div>
             </div>
             <div class="group">
-              <div class="two">
-                <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
-                <div class="field"><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(000) 000-0000"></div>
-              </div>
+              <div class="field"><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(000) 000-0000"></div>
               <div class="field"><label for="note">A message for the couple</label><textarea id="note" name="message" placeholder="Optional"></textarea></div>
             </div>
-            <div class="actions">
-              <button class="btn fill" type="submit" id="submitBtn">Confirm my seat</button>
-              <button class="link-btn" type="button" id="backBtn">Not you? Search again</button>
-            </div>
+            <div class="actions"><button class="btn fill" type="submit" id="submitBtn">Confirm my seat</button></div>
             <div class="form-status" id="formStatus" aria-live="polite"></div>
           </form>
         </div>
@@ -972,10 +961,9 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
   <audio id="audio" preload="metadata" data-cfg-src="songSrc"></audio>
 </div>
 
-<script src="guests.js"></script>
 <script>
 /* ============================================================
-   EDIT EVERYTHING HERE. The guest list lives in guests.js.
+   EDIT EVERYTHING HERE.
    ============================================================ */
 const CONFIG = {
   coupleName:      "The Robinsons",
@@ -1036,12 +1024,6 @@ const derived={...CONFIG,
 $$("[data-cfg]").forEach(el=>{const v=derived[el.dataset.cfg];if(v!==undefined)el.textContent=v;});
 $$("[data-cfg-src]").forEach(el=>{el.src=CONFIG[el.dataset.cfgSrc];});
 const params=new URLSearchParams(location.search);
-const norm=s=>String(s||"").toLowerCase().replace(/[^a-z\s]/g," ").replace(/\s+/g," ").trim();
-const findHousehold=q=>{const n=norm(q);if(!n)return null;const parts=n.split(" ");
-  return GUESTS.find(h=>h.names.some(nm=>norm(nm)===n))
-      || GUESTS.find(h=>h.names.some(nm=>{const t=norm(nm).split(" ");return parts.length>=2&&t[0]===parts[0]&&t[t.length-1]===parts[parts.length-1];}))
-      || GUESTS.find(h=>norm(h.household)===n) || null;};
-const linked=params.get("h")?GUESTS.find(g=>g.id===params.get("h")):null;
 const strip=["Table No. <b>02</b>","Reserved: <b>Robinson</b>","Two Seats. <b>One Covenant.</b>",`<b>${derived.dateShort}</b>`,`<b>${CONFIG.destinationCity}</b>`,"Two Hearts. <b>One Story.</b>"];
 $("#strip").innerHTML=(strip.concat(strip)).map(s=>`<span>${s}</span>`).join("");
 
@@ -1049,7 +1031,6 @@ $("#strip").innerHTML=(strip.concat(strip)).map(s=>`<span>${s}</span>`).join("")
 (function(){
   const ent=$("#entrance"),s1=$("#stage1"),s2=$("#stage2"),inv=$("#invite"),song=$("#song");
   const skip=location.hash.length>1||(sessionStorage.getItem("p2-entered")==="1"&&!params.has("invite"));
-  if(linked){$("#inviteTo").innerHTML=`<b>${linked.household}</b>, the Robinsons request the pleasure of your company`;$("#inviteSeat").innerHTML=`<span>${linked.seats} ${linked.seats===1?"seat":"seats"} <b>reserved</b></span>`;$("#entLine").innerHTML=`${linked.household}, you are invited to <em>take your seat.</em>`;}
   if(afterWedding){$("#entLine").innerHTML="Thank you for <em>taking your seat.</em>";}
   const finish=()=>{ent.classList.add("away");document.body.classList.remove("locked");sessionStorage.setItem("p2-entered","1");setTimeout(()=>{ent.classList.add("gone");song.classList.add("show","nudge");},1000);};
   if(skip){ent.classList.add("gone");document.body.classList.remove("locked");song.classList.add("show");return;}
@@ -1137,41 +1118,30 @@ $("#strip").innerHTML=(strip.concat(strip)).map(s=>`<span>${s}</span>`).join("")
   box.addEventListener("mouseenter",()=>box.classList.add("open"));
 })();
 
-/* ---------- RSVP: find your invitation ---------- */
+/* ---------- RSVP ---------- */
 (function(){
-  const steps={find:$("#s-find"),reply:$("#s-reply"),done:$("#s-done")};
-  const show=k=>{Object.values(steps).forEach(s=>s.classList.remove("on"));steps[k].classList.add("on");};
-  const findForm=$("#findForm"),findStatus=$("#findStatus"),form=$("#rsvpForm"),status=$("#formStatus"),btn=$("#submitBtn");
-  let hh=null;
+  const form=$("#rsvpForm"),status=$("#formStatus"),btn=$("#submitBtn"),done=$("#s-done");
   $("#meal").innerHTML=CONFIG.meals.map(m=>`<option>${m}</option>`).join("");
-  const load=h=>{hh=h;
-    $("#hhName").textContent=h.household;
-    $("#hhSeats").textContent=`We have reserved ${h.seats} ${h.seats===1?"seat":"seats"} in your honor.`;
-    $("#qAttend").textContent=h.aruba?`Will you be joining us in ${CONFIG.destinationCity}?`:"Will you be joining us for the celebration at home?";
-    $("#guestChecks").innerHTML=h.names.map(n=>`<label class="check"><input type="checkbox" name="guest" value="${n}" checked><span>${n}</span></label>`).join("")+(h.plusOne?`<label class="check"><input type="checkbox" name="guest" value="Guest of ${h.names[0]}"><span>A guest</span><small>optional</small></label>`:"");
-    $("#eventChecks").innerHTML=CONFIG.events.map(e=>`<label class="check"><input type="checkbox" name="event" value="${e}" checked><span>${e}</span></label>`).join("");
-    $("#gEvents").hidden=!h.aruba;$("#gTravel").hidden=!h.aruba;
-    show("reply");};
-  findForm.addEventListener("submit",e=>{e.preventDefault();const h=findHousehold($("#findName").value);
-    if(h){findStatus.textContent="";load(h);}
-    else{findStatus.className="form-status err";findStatus.textContent="We could not find that name. Try the spelling on your invitation, or another name in your household.";}});
-  $("#backBtn").addEventListener("click",()=>{show("find");$("#findName").focus();});
-  $$("input[name=attending]",form).forEach(r=>r.addEventListener("change",()=>{$("#acceptOnly").hidden=form.attending.value!=="Joyfully accepts";}));
-  if(linked){load(linked);}
+  $("#eventChecks").innerHTML=CONFIG.events.map(e=>`<label class="check"><input type="checkbox" name="event" value="${e}" checked><span>${e}</span></label>`).join("");
+  const sync=()=>{const accepts=form.attending.value==="Joyfully accepts";$("#acceptOnly").hidden=!accepts;
+    const aruba=form.celebrating.value!=="At the celebration at home";$("#gEvents").hidden=!aruba;$("#gTravel").hidden=!aruba;};
+  $$("input[name=attending],#where",form).forEach(el=>el.addEventListener("change",sync));sync();
   form.addEventListener("submit",async e=>{e.preventDefault();status.className="form-status";status.textContent="";
-    const fd=new FormData(form);const accepts=fd.get("attending")==="Joyfully accepts";
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(fd.get("email")||"")){status.className="form-status err";status.textContent="Please add an email so the couple can reach you.";return;}
-    const data={household:hh.household,household_id:hh.id,attending:fd.get("attending"),guests_attending:accepts?fd.getAll("guest").join(", "):"",events:accepts&&hh.aruba?fd.getAll("event").join(", "):"",
-      arrival:accepts?fd.get("arrival"):"",hotel:accepts&&hh.aruba?fd.get("hotel"):"",meal:accepts?fd.get("meal"):"",dietary:accepts?fd.get("dietary"):"",song_request:accepts?fd.get("song_request"):"",
-      email:fd.get("email"),phone:fd.get("phone"),message:fd.get("message"),event:derived.dateLong,subject:`RSVP: ${hh.household} · ${fd.get("attending")}`};
-    const done=()=>{$("#doneTitle").textContent=accepts?"Your place at the table is confirmed.":"We will miss you at the table.";
+    const fd=new FormData(form);const accepts=fd.get("attending")==="Joyfully accepts";const aruba=fd.get("celebrating")!=="At the celebration at home";
+    if(!String(fd.get("name")||"").trim()||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(fd.get("email")||"")){status.className="form-status err";status.textContent="Please add your name and a valid email so the couple can reach you.";return;}
+    const data={name:fd.get("name"),email:fd.get("email"),attending:fd.get("attending"),
+      guests:accepts?fd.get("guests"):"",guest_names:accepts?fd.get("guest_names"):"",celebrating:accepts?fd.get("celebrating"):"",
+      events:accepts&&aruba?fd.getAll("event").join(", "):"",arrival:accepts&&aruba?fd.get("arrival"):"",hotel:accepts&&aruba?fd.get("hotel"):"",
+      meal:accepts?fd.get("meal"):"",dietary:accepts?fd.get("dietary"):"",song_request:accepts?fd.get("song_request"):"",
+      phone:fd.get("phone"),message:fd.get("message"),event:derived.dateLong,subject:`RSVP: ${fd.get("name")} · ${fd.get("attending")}`};
+    const finish=()=>{$("#doneTitle").textContent=accepts?"Your place at the table is confirmed.":"We will miss you at the table.";
       $("#doneSub").textContent=accepts?"Thank you. We are so glad to have you with us.":"Thank you for letting us know. You will be in our hearts that day.";
-      $("#doneSeat").textContent=`Reserved: ${hh.household}`;show("done");};
+      $("#doneSeat").textContent=`Reserved: ${fd.get("name")}`;$("#s-reply").classList.remove("on");done.classList.add("on");};
     if(CONFIG.rsvpEndpoint){btn.disabled=true;btn.textContent="Sending";
-      try{const r=await fetch(CONFIG.rsvpEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});if(!r.ok)throw new Error(r.status);done();}
+      try{const r=await fetch(CONFIG.rsvpEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});if(!r.ok)throw new Error(r.status);finish();}
       catch(err){status.className="form-status err";status.textContent="Something went wrong sending your reply. Please try again in a moment.";btn.disabled=false;btn.textContent="Confirm my seat";}}
-    else if(CONFIG.rsvpEmail){const body=Object.entries(data).map(([k,v])=>`${k}: ${v}`).join("\n");location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(body)}`;done();}
-    else{console.warn("RSVP not connected: set rsvpEndpoint or rsvpEmail in CONFIG.",data);done();}
+    else if(CONFIG.rsvpEmail){const body=Object.entries(data).map(([k,v])=>`${k}: ${v}`).join("\n");location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(body)}`;finish();}
+    else{console.warn("RSVP not connected: set rsvpEndpoint or rsvpEmail in CONFIG.",data);finish();}
   });
 })();
 </script>
