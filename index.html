@@ -451,9 +451,10 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
   .hero .text{padding-top:clamp(40px,7vw,64px);padding-bottom:clamp(48px,8vw,80px)}
   .hero .text::before{ /* stationery hairline */display:none}
   .scroll-cue{display:none}
-  .chapter,.band .grid,.aruba .grid,.song .grid,.date .grid,.next .grid,.rsvp .grid{grid-template-columns:1fr}
+  .chapter,.band .grid,.aruba .grid,.song .grid,.date .grid,.next .grid,.rsvp .grid{grid-template-columns:minmax(0,1fr)}
+  .chapter>*,.band .grid>*,.aruba .grid>*,.song .grid>*,.date .grid>*,.next .grid>*,.rsvp .grid>*{min-width:0}
   .chapter.flip .frame{order:0}
-  .proposal .layout{grid-template-columns:1fr}
+  .proposal .layout{grid-template-columns:minmax(0,1fr)}
   .proposal .tall{max-width:520px;margin:0 auto;width:100%}
   .band .frame,.aruba .frame,.next .frame{max-width:420px}
 }
