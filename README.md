@@ -11,10 +11,10 @@ Single-page wedding site and RSVP for the Robinsons. Static HTML, no build step,
 6. Floating song player in the lower corner that keeps playing while guests scroll.
 
 ## RSVP
-A straightforward form: name, email, accepts or declines, seats and names in the party, arrival and hotel, meal, dietary needs, song request, phone, message. Declining collapses it to the essentials.
+A straightforward form: name, email, accepts or declines, seats and names in the party, arrival and hotel, song request, phone, message. Declining collapses it to the essentials.
 
 ## Fill in the details
-Everything editable is the `CONFIG` object at the bottom of index.html: reception venue, RSVP deadline, the weekend schedule, meal choices, every concierge answer (blank shows "Details to follow"), and where replies go (`rsvpEndpoint` for a JSON POST endpoint such as Web3Forms, or `rsvpEmail` for a prefilled email). Until one of those is set, the form shows the confirmation but the reply is not delivered anywhere.
+Everything editable is the `CONFIG` object at the bottom of index.html: reception venue, RSVP deadline, the evening schedule, every concierge answer (blank shows "Details to follow"), and where replies go (`rsvpEndpoint` for a JSON POST endpoint such as Web3Forms, or `rsvpEmail` for a prefilled email). Until one of those is set, the form shows the confirmation but the reply is not delivered anywhere.
 
 ## After the wedding
 The day after March 6, 2027 the hero countdown becomes "We did." and the archive section appears automatically. Drop photos and a film link into that section when they are ready.
