@@ -14,7 +14,7 @@ Single-page wedding site and RSVP for the Robinsons. Static HTML, no build step,
 A straightforward form: name, email, accepts or declines, seats and names in the party, where they are staying, song request, phone, message. Declining collapses it to the essentials.
 
 ## Fill in the details
-Everything editable is the `CONFIG` object at the bottom of index.html: reception venue, RSVP deadline, the evening schedule, every concierge answer (blank shows "Details to follow"), and where replies go (`rsvpEndpoint` for a JSON POST endpoint such as Web3Forms, or `rsvpEmail` for a prefilled email). Until one of those is set, the form shows the confirmation but the reply is not delivered anywhere.
+Everything editable is the `CONFIG` object at the bottom of index.html: reception venue, RSVP deadline, the evening schedule, every concierge answer (blank shows "Details to follow"), and where replies go. Replies are emailed to robinsonpartyofii@gmail.com through FormSubmit (`rsvpEndpoint`). FormSubmit sends a one-time activation email to that inbox on the first submission; it must be clicked once. If FormSubmit is ever unreachable the page falls back to a prefilled email (`rsvpEmail`).
 
 ## After the wedding
 The day after March 6, 2027 the hero countdown becomes "We did." and the archive section appears automatically. Drop photos and a film link into that section when they are ready.

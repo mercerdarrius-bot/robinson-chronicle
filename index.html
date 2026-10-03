@@ -978,10 +978,10 @@ const CONFIG = {
   songArtist: "Love in Lyricz",
   songSrc:    "audio/our-song.mp3?v=2",
 
-  // Where replies go. Option A: endpoint that accepts a JSON POST (Web3Forms, Formspree, Basin).
-  // Option B: leave blank and set rsvpEmail; replies open a prefilled email.
-  rsvpEndpoint: "",
-  rsvpEmail:    "",
+  // Replies are emailed to the couple through FormSubmit (no account needed).
+  // The first submission sends a one-time activation email to this inbox; click Activate once and every reply after that is delivered.
+  rsvpEmail:    "robinsonpartyofii@gmail.com",
+  rsvpEndpoint: "https://formsubmit.co/ajax/robinsonpartyofii@gmail.com",
 };
 
 /* ---------- helpers ---------- */
@@ -1106,14 +1106,15 @@ $("#strip").innerHTML=(strip.concat(strip)).map(s=>`<span>${s}</span>`).join("")
       guests:accepts?fd.get("guests"):"",guest_names:accepts?fd.get("guest_names"):"",
       hotel:accepts?fd.get("hotel"):"",
       song_request:accepts?fd.get("song_request"):"",
-      phone:fd.get("phone"),message:fd.get("message"),event:derived.dateLong,subject:`RSVP: ${fd.get("name")} · ${fd.get("attending")}`};
+      phone:fd.get("phone"),message:fd.get("message"),event:derived.dateLong,
+      _subject:`RSVP: ${fd.get("name")} · ${fd.get("attending")}`,_template:"table",_captcha:"false",_replyto:fd.get("email")};
     const finish=()=>{$("#doneTitle").textContent=accepts?"Your place at the table is confirmed.":"We will miss you at the table.";
       $("#doneSub").textContent=accepts?"Thank you. We are so glad to have you with us.":"Thank you for letting us know. You will be in our hearts that day.";
       $("#doneSeat").textContent=`Reserved: ${fd.get("name")}`;$("#s-reply").classList.remove("on");done.classList.add("on");};
     if(CONFIG.rsvpEndpoint){btn.disabled=true;btn.textContent="Sending";
       try{const r=await fetch(CONFIG.rsvpEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});if(!r.ok)throw new Error(r.status);finish();}
       catch(err){status.className="form-status err";status.textContent="Something went wrong sending your reply. Please try again in a moment.";btn.disabled=false;btn.textContent="Confirm my seat";}}
-    else if(CONFIG.rsvpEmail){const body=Object.entries(data).map(([k,v])=>`${k}: ${v}`).join("\n");location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(body)}`;finish();}
+    else if(CONFIG.rsvpEmail){const body=Object.entries(data).filter(([k])=>!k.startsWith("_")).map(([k,v])=>`${k}: ${v}`).join("\n");location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent(data._subject)}&body=${encodeURIComponent(body)}`;finish();}
     else{console.warn("RSVP not connected: set rsvpEndpoint or rsvpEmail in CONFIG.",data);finish();}
   });
 })();
