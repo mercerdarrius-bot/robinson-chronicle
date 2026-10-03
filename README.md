@@ -1,6 +1,6 @@
 # Robinson Party of Two
 
-Single-page wedding site and RSVP for the Robinsons. Static HTML, no build step, no backend. Live at https://mercerdarrius-bot.github.io/robinson-chronicle/
+Single-page wedding site and RSVP for the Robinsons. Static HTML, no build step, no backend. Live at https://robinsonpartyof2.com (GitHub Pages custom domain; DNS on Cloudflare, records DNS-only)
 
 ## The experience
 1. Entrance: black screen, the R monogram draws itself, "You are invited to take your seat", Open Invitation, the card unfolds, Enter the Celebration. Shown once per browser session. Add `?invite=1` to force it.
