@@ -1112,8 +1112,11 @@ $("#strip").innerHTML=(strip.concat(strip)).map(s=>`<span>${s}</span>`).join("")
       $("#doneSub").textContent=accepts?"Thank you. We are so glad to have you with us.":"Thank you for letting us know. You will be in our hearts that day.";
       $("#doneSeat").textContent=`Reserved: ${fd.get("name")}`;$("#s-reply").classList.remove("on");done.classList.add("on");};
     if(CONFIG.rsvpEndpoint){btn.disabled=true;btn.textContent="Sending";
-      try{const r=await fetch(CONFIG.rsvpEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});if(!r.ok)throw new Error(r.status);finish();}
-      catch(err){status.className="form-status err";status.textContent="Something went wrong sending your reply. Please try again in a moment.";btn.disabled=false;btn.textContent="Confirm my seat";}}
+      try{const r=await fetch(CONFIG.rsvpEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});
+        const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)==="false")throw new Error(j.message||r.status);finish();}
+      catch(err){console.warn("RSVP delivery failed:",err);
+        if(CONFIG.rsvpEmail){const body=Object.entries(data).filter(([k])=>!k.startsWith("_")).map(([k,v])=>`${k}: ${v}`).join("\n");location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent(data._subject)}&body=${encodeURIComponent(body)}`;finish();}
+        else{status.className="form-status err";status.textContent="Something went wrong sending your reply. Please try again in a moment.";btn.disabled=false;btn.textContent="Confirm my seat";}}}
     else if(CONFIG.rsvpEmail){const body=Object.entries(data).filter(([k])=>!k.startsWith("_")).map(([k,v])=>`${k}: ${v}`).join("\n");location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent(data._subject)}&body=${encodeURIComponent(body)}`;finish();}
     else{console.warn("RSVP not connected: set rsvpEndpoint or rsvpEmail in CONFIG.",data);finish();}
   });
