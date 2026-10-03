@@ -317,7 +317,7 @@ section[id]{scroll-margin-top:var(--navh)}
 .venue-card{margin-top:clamp(40px,6vw,80px);border:1px solid var(--line);padding:clamp(28px,4vw,56px);background:var(--cream-2);display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(28px,5vw,64px);align-items:center;position:relative}
 .venue-card::before{content:"";position:absolute;inset:9px;border:1px solid var(--line-orange);pointer-events:none}
 .vc-name{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4.4vw,64px);line-height:1.05;margin:14px 0 6px}
-.vc-city{font-family:var(--sans);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange-deep);margin:0 0 18px}
+.vc-city{font-family:var(--sans);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-deep);margin:0 0 18px}
 .vc-when{font-family:var(--serif);font-weight:300;font-size:clamp(20px,2vw,26px);display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 26px}
 .vc-when i{width:5px;height:5px;background:var(--orange);transform:rotate(45deg);display:inline-block}
 .vc-links{display:flex;gap:14px;flex-wrap:wrap;position:relative}
@@ -751,11 +751,11 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
       <div class="vc-text">
         <span class="eyebrow">The Venue</span>
         <h3 class="vc-name" data-cfg="venue">Maceo Elks Lodge</h3>
-        <p class="vc-city"><span data-cfg="destinationCity">Jacksonville, Florida</span></p>
+        <p class="vc-city"><span data-cfg="venueAddress">712 W Duval St, Jacksonville, FL 32202</span></p>
         <p class="vc-when"><span data-cfg="dateLong">Saturday, March 6, 2027</span> <i></i> Doors open at 5:00 PM</p>
         <div class="vc-links">
-          <a class="btn" href="https://www.google.com/maps/search/Maceo+Elks+Lodge+Jacksonville+FL" target="_blank" rel="noopener">Open in Maps <span class="arrow">&rarr;</span></a>
-          <a class="btn" href="https://www.google.com/maps/search/Marriott+Jacksonville+Downtown" target="_blank" rel="noopener">The Hotel <span class="arrow">&rarr;</span></a>
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Maceo+Elks+Lodge%2C+712+W+Duval+St%2C+Jacksonville%2C+FL+32202" target="_blank" rel="noopener">Open in Maps <span class="arrow">&rarr;</span></a>
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Marriott+Jacksonville+Downtown%2C+245+Water+St%2C+Jacksonville%2C+FL+32202" target="_blank" rel="noopener">The Hotel <span class="arrow">&rarr;</span></a>
         </div>
       </div>
       <svg class="vc-art" viewBox="0 0 320 320" fill="none" stroke="#B85C2C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -839,7 +839,8 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
         <ul class="details">
           <li><span>Ceremony &amp; Reception</span><span data-cfg="dateLong">Saturday, March 6, 2027</span></li>
           <li><span>Doors open</span><span>5:00 PM</span></li>
-          <li><span>Venue</span><span><span data-cfg="venue">Maceo Elks Lodge</span>, <span data-cfg="destinationCity">Jacksonville, Florida</span></span></li>
+          <li><span>Venue</span><span><span data-cfg="venue">Maceo Elks Lodge</span><br><span data-cfg="venueAddress">712 W Duval St, Jacksonville, FL 32202</span></span></li>
+          <li><span>Hotel</span><span><span data-cfg="hotel">Marriott Jacksonville Downtown</span><br><span data-cfg="hotelAddress">245 Water St, Jacksonville, FL 32202</span></span></li>
           <li><span>Attire</span><span data-cfg="dressCodeCap">Black tie</span></li>
           <li><span>Reply by</span><span data-cfg="rsvpDeadline">January 31, 2027</span></li>
         </ul>
@@ -947,7 +948,9 @@ const CONFIG = {
   eventDate:       "2027-03-06T17:00:00",     // doors open, 5:00 PM
   destinationCity: "Jacksonville, Florida",
   venue:           "Maceo Elks Lodge",
+  venueAddress:    "712 W Duval St, Jacksonville, FL 32202",
   hotel:           "Marriott Jacksonville Downtown",
+  hotelAddress:    "245 Water St, Jacksonville, FL 32202",
   dressCode:       "black tie",
   rsvpDeadline:    "January 31, 2027",
 
@@ -958,8 +961,8 @@ const CONFIG = {
 
   // Guest concierge. Blank = "Details to follow".
   concierge: {
-    venue:     "The ceremony and reception are held at the Maceo Elks Lodge in Jacksonville, Florida. Doors open at 5:00 PM on Saturday, March 6, 2027.",
-    hotel:     "A room block is being arranged at the Marriott Jacksonville Downtown. Booking details and any group rate will be added here as soon as they are confirmed.",
+    venue:     "The ceremony and reception are held at the Maceo Elks Lodge, 712 W Duval St, Jacksonville, FL 32202. Doors open at 5:00 PM on Saturday, March 6, 2027.",
+    hotel:     "For guests staying overnight, the couple recommends the Marriott Jacksonville Downtown, 245 Water St, Jacksonville, FL 32202, a short drive from the lodge.",
     parking:   "",
     transport: "",
     dress:     "Black tie. Tuxedos and floor-length evening gowns. This is a formal affair, so come dressed for an elegant evening.",
