@@ -318,6 +318,12 @@ section[id]{scroll-margin-top:var(--navh)}
 .con .body{padding:0 0 26px 60px;font-size:17px;line-height:1.65;color:var(--ink-2)}
 .con .body p{margin:0 0 .8em}
 .con .body .tbd{font-style:italic}
+.con .body dl{margin:4px 0 14px}
+.con .body dt{font-family:var(--serif);font-weight:500;font-size:19px;color:var(--ink);margin-top:14px}
+.con .body dt:first-child{margin-top:0}
+.con .body dd{margin:2px 0 0}
+.con .body a{color:var(--emerald);border-bottom:1px solid var(--line-orange)}
+.con .body .fine{font-style:italic;font-size:15px;color:var(--ink-3)}
 .venue-card{margin-top:clamp(40px,6vw,80px);border:1px solid var(--line);padding:clamp(28px,4vw,56px);background:var(--cream-2);display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(28px,5vw,64px);align-items:center;position:relative}
 .venue-card::before{content:"";position:absolute;inset:9px;border:1px solid var(--line-orange);pointer-events:none}
 .vc-name{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4.4vw,64px);line-height:1.05;margin:14px 0 6px}
@@ -749,7 +755,7 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
   <div class="wrap">
     <span class="eyebrow rv">Guest Concierge</span>
     <h2 class="h2 rv d1" style="max-width:20ch">Everything you need, <em>effortlessly.</em></h2>
-    <p class="lede rv d2">Practical details for the evening, kept in one place. Anything marked to follow will be added as the couple confirms it.</p>
+    <p class="lede rv d2">Practical details for the evening, kept in one place.</p>
     <div class="con-grid rv d2" id="conGrid"></div>
     <div class="venue-card rv">
       <div class="vc-text">
@@ -965,17 +971,30 @@ const CONFIG = {
 
   // Guest concierge. Blank = "Details to follow".
   concierge: {
-    venue:     "The ceremony and reception are held at the Maceo Elks Lodge, 712 W Duval St, Jacksonville, FL 32202. Doors open at 5:00 PM on Saturday, March 6, 2027.",
+    venue:     "The ceremony and reception are held at the Maceo Elks Lodge, 712 W Duval St, Jacksonville, FL 32202. Doors open at 5:00 PM on Saturday, March 6, 2027. The lodge is a landmark on the National Register of Historic Places, in the historic LaVilla neighborhood once called the Harlem of the South.",
     hotel:     "For guests staying overnight, the couple recommends the Marriott Jacksonville Downtown, 245 Water St, Jacksonville, FL 32202, a short drive from the lodge.",
-    parking:   "",
-    transport: "",
     dress:     "Black tie. Tuxedos and floor-length evening gowns. This is a formal affair, so come dressed for an elegant evening.",
     weather:   "Early March in Jacksonville is mild. Expect daytime highs near 70°F and evenings around 50°F, so bring a wrap or overcoat for the walk in.",
     airport:   "Jacksonville International Airport (JAX) is about 20 minutes from downtown. Rideshares and rental cars are both easy from the terminal.",
-    todo:      "",
-    gifts:     "",
-    faq:       "",
+    todo: `<p>If you are in town for the weekend, a few favorites close to the lodge and the hotel:</p>
+      <dl class="todo">
+        <dt>Ritz Theatre &amp; Museum</dt><dd>829 N Davis St, a few blocks from the lodge. The story of LaVilla, its music, and its people. Open Tuesday through Friday, 10 AM to 4 PM, so plan a Friday visit.</dd>
+        <dt>Riverside Arts Market</dt><dd>715 Riverside Ave, under the Fuller Warren Bridge. Local artists, makers, bakers, and growers on the river, Saturdays from 10 AM to 3 PM. An easy morning before the evening.</dd>
+        <dt>Cummer Museum of Art &amp; Gardens</dt><dd>829 Riverside Ave. Fine art and riverfront gardens in historic Riverside. Open Saturdays 10 AM to 4 PM and Sundays from noon.</dd>
+        <dt>The Riverwalk</dt><dd>Walkways along both banks of the St. Johns River, steps from the Marriott. Cross to the Southbank for Friendship Fountain.</dd>
+        <dt>The beaches</dt><dd>Jacksonville Beach and Atlantic Beach are about 30 minutes east of downtown, lovely for a Sunday stroll before you head home.</dd>
+      </dl>
+      <p class="fine">Hours can change, so please check before you go.</p>`,
+    faq: `<dl class="faq">
+        <dt>What time should I arrive?</dt><dd>Doors open at 5:00 PM on Saturday, March 6, 2027. The ceremony and reception are both at the Maceo Elks Lodge, so there is only one place to be.</dd>
+        <dt>What should I wear?</dt><dd>Black tie. Tuxedos and floor-length evening gowns.</dd>
+        <dt>When do I need to reply?</dt><dd>By January 31, 2027, using the reply form on this page. One reply per household is perfect.</dd>
+        <dt>Where should I stay?</dt><dd>The couple recommends the Marriott Jacksonville Downtown, 245 Water St, a short drive from the lodge.</dd>
+        <dt>What if my plans change?</dt><dd>Simply send a new reply through the form, or write to <a href="mailto:robinsonpartyofii@gmail.com">robinsonpartyofii@gmail.com</a>.</dd>
+        <dt>Who do I contact with questions?</dt><dd>Email the couple at <a href="mailto:robinsonpartyofii@gmail.com">robinsonpartyofii@gmail.com</a>.</dd>
+      </dl>`,
   },
+
 
 
   songTitle:  "I Found My Forever in You",
@@ -1051,8 +1070,8 @@ $("#strip").innerHTML=(strip.concat(strip)).map(s=>`<span>${s}</span>`).join("")
 (function(){
   $("#days").classList.toggle("single",CONFIG.weekend.length===1);$("#days").innerHTML=CONFIG.weekend.map(d=>`<div class="day"><div class="dow">${d.dow}</div><div class="d">${d.day}</div><div class="what">${d.what}</div><div class="det ${d.detail?"":"tbd"}">${d.detail||"Details to follow"}</div></div>`).join("");
   const c=CONFIG.concierge;
-  const items=[["01","The venue",c.venue],["02","Hotel",c.hotel],["03","Parking",c.parking],["04","Getting there",c.transport],["05","Dress code",c.dress],["06","Weather",c.weather],["07","Flying in",c.airport],["08","Things to do in Jacksonville",c.todo],["09","Gifts",c.gifts],["10","FAQ",c.faq]];
-  $("#conGrid").innerHTML=items.map(([n,t,b])=>`<details class="con"><summary><span class="n">${n}</span><span>${t}</span><span class="pm"></span></summary><div class="body">${b?`<p>${b}</p>`:`<p class="tbd">Details to follow.</p>`}</div></details>`).join("");
+  const items=[["01","The venue",c.venue],["02","Hotel",c.hotel],["03","Dress code",c.dress],["04","Weather",c.weather],["05","Flying in",c.airport],["06","Things to do in Jacksonville",c.todo],["07","FAQ",c.faq]];
+  $("#conGrid").innerHTML=items.map(([n,t,b])=>`<details class="con"><summary><span class="n">${n}</span><span>${t}</span><span class="pm"></span></summary><div class="body">${b?(b.trim().startsWith("<")?b:`<p>${b}</p>`):`<p class="tbd">Details to follow.</p>`}</div></details>`).join("");
 })();
 
 /* ---------- calendar ---------- */
