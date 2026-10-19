@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Merx Analytics: cookieless and first party (see the privacy page). Plain tags on purpose:
+     the daily tag check reads the served HTML. -->
+<script>window.mx=window.mx||function(){(window.mx.q=window.mx.q||[]).push(arguments)}</script>
+<script defer src="https://a.merxstudios.com/m.js" data-site="hkt7syoy5ii2f2fl"></script>
+<title>Privacy | Robinson Party of Two</title>
+<meta name="description" content="How the Robinson Party of Two website handles visitor information.">
+<meta name="theme-color" content="#0E1512">
+<link rel="canonical" href="https://robinsonpartyof2.com/privacy.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- A quiet page on the invitation's cream paper. The header and footer
+     mirror the home page's nav brand and footer base line. -->
+<style>
+:root{
+  --cream:#F6F0E4;
+  --ink:#1E2A24; --ink-2:#4A544E; --ink-3:#7A827C;
+  --emerald:#145A45; --orange:#B85C2C;
+  --line:rgba(30,42,36,.16); --line-orange:rgba(184,92,44,.45);
+  --serif:"Cormorant Garamond",Garamond,"Times New Roman",serif;
+  --sans:"Jost","Futura","Helvetica Neue",Arial,sans-serif;
+  --gutter:clamp(20px,5vw,72px); --navh:76px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--cream);color:var(--ink);
+  font-family:var(--serif);font-size:19px;line-height:1.7;font-weight:500;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+a{color:inherit;text-decoration:none}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.07;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* header: the home page's nav brand, at rest */
+.bar{height:var(--navh);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 var(--gutter);box-shadow:0 1px 0 var(--line)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{width:40px;height:40px}
+.brand span{font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:500}
+.home{font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;position:relative;padding:6px 0}
+.home::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--orange);transition:right .35s}
+.home:hover::after,.home:focus-visible::after{right:0}
+
+/* the page */
+.page{flex:1;padding:clamp(72px,10vw,140px) var(--gutter)}
+.prose{max-width:680px;margin:0 auto}
+.title{font-family:var(--serif);font-weight:300;line-height:1.08;font-size:clamp(40px,5vw,66px);margin:0 0 6px}
+.divider{display:flex;align-items:center;gap:14px;margin:0 0 34px;color:var(--orange)}
+.divider::before,.divider::after{content:"";height:1px;width:60px;background:var(--line-orange)}
+.divider i{width:6px;height:6px;background:var(--orange);transform:rotate(45deg);display:block}
+.prose p{margin:0 0 1.15em;color:var(--ink-2)}
+
+/* footer: the home page's footer base line */
+footer{padding:0 0 40px}
+footer .wrap{max-width:1180px;margin:0 auto;padding:0 var(--gutter)}
+footer .base{padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+footer .base .privacy{transition:color .3s}
+footer .base .privacy:hover,footer .base .privacy:focus-visible{color:var(--ink)}
+.merx{display:inline-flex;align-items:center;gap:10px;color:var(--ink-3)}
+.merx svg{width:20px;height:20px;transition:transform .35s}
+.merx:hover svg{transform:rotate(-11deg)}
+@media (max-width:640px){
+  .bar{height:64px}
+  .brand span{display:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="brand" href="./" aria-label="Robinson Party of Two, home">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="#B85C2C" stroke-width="1.2"/><circle cx="50" cy="50" r="41" fill="none" stroke="#B85C2C" stroke-width=".6" opacity=".6"/><text x="50" y="64" text-anchor="middle" font-family="Cormorant Garamond, Garamond, serif" font-size="46" font-weight="300" fill="#145A45">R</text></svg>
+    <span>Party of Two</span>
+  </a>
+  <a class="home" href="./">Back to the invitation</a>
+</header>
+
+<main class="page">
+  <div class="prose">
+    <h1 class="title">Privacy</h1>
+    <div class="divider" aria-hidden="true"><i></i></div>
+    <p>This site uses Merx Analytics to understand how visitors use it. Merx Analytics does not use cookies, does not store IP addresses, and does not follow you across other websites. It records the pages visited, links and buttons clicked, whether a form was submitted (never what was written in it), the website that referred you, your general device, browser, and screen size, and your approximate location (city, state, or country). This information is used only in aggregate to improve the site.</p>
+    <p>The RSVP form sends your reply to the couple by email.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="base">
+      <span>Robinson · Party of Two · <a class="privacy" href="privacy.html" aria-current="page">Privacy</a></span>
+      <a class="merx" href="https://merxstudios.com" target="_blank" rel="noopener" aria-label="Crafted by Merx Studios"><span>Crafted by Merx Studios</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19"/><path d="M7 17V7l5 6 5-6v10"/></svg></a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Merx Analytics: cookieless and first party (see the privacy page). Plain tags on purpose:
+     the daily tag check reads the served HTML. -->
+<script>window.mx=window.mx||function(){(window.mx.q=window.mx.q||[]).push(arguments)}</script>
+<script defer src="https://a.merxstudios.com/m.js" data-site="hkt7syoy5ii2f2fl"></script>
 <title>Robinson Party of Two</title>
 <meta name="description" content="Two Hearts. One Story. The Robinsons request the pleasure of your company in Jacksonville, Florida on March 6, 2027. Take your seat.">
 <meta name="theme-color" content="#0E1512">
@@ -455,6 +459,8 @@ footer .set em{font-style:italic;color:var(--emerald)}
 footer .line2{font-family:var(--sans);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--orange-deep);margin:18px 0 8px}
 footer .line3{font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)}
 footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+footer .base .privacy{transition:color .3s}
+footer .base .privacy:hover,footer .base .privacy:focus-visible{color:var(--ink)}
 .merx{display:inline-flex;align-items:center;gap:10px;color:var(--ink-3)}
 .merx svg{width:20px;height:20px;transition:transform .35s}
 .merx:hover svg{transform:rotate(-11deg)}
@@ -926,7 +932,7 @@ footer .base{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);d
     <div class="line2">Faith · Love · Commitment</div>
     <div class="line3">Two Hearts. One Story. · <span data-cfg="dateShort">March 6, 2027</span></div>
     <div class="base">
-      <span>Robinson · Party of Two</span>
+      <span>Robinson · Party of Two · <a class="privacy" href="privacy.html">Privacy</a></span>
       <a class="merx" href="https://merxstudios.com" target="_blank" rel="noopener" aria-label="Crafted by Merx Studios"><span>Crafted by Merx Studios</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19"/><path d="M7 17V7l5 6 5-6v10"/></svg></a>
     </div>
   </div>
@@ -1136,7 +1142,9 @@ $("#strip").innerHTML=(strip.concat(strip)).map(s=>`<span>${s}</span>`).join("")
       $("#doneSeat").textContent=`Reserved: ${fd.get("name")}`;$("#s-reply").classList.remove("on");done.classList.add("on");};
     if(CONFIG.rsvpEndpoint){btn.disabled=true;btn.textContent="Sending";
       try{const r=await fetch(CONFIG.rsvpEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});
-        const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)==="false")throw new Error(j.message||r.status);finish();}
+        const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)==="false")throw new Error(j.message||r.status);
+        // Counted only once FormSubmit confirms delivery (the email fallback below is not counted).
+        if(window.mx)window.mx('event','form_submit',{form:'rsvp'});finish();}
       catch(err){console.warn("RSVP delivery failed:",err);
         if(CONFIG.rsvpEmail){const body=Object.entries(data).filter(([k])=>!k.startsWith("_")).map(([k,v])=>`${k}: ${v}`).join("\n");location.href=`mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent(data._subject)}&body=${encodeURIComponent(body)}`;finish();}
         else{status.className="form-status err";status.textContent="Something went wrong sending your reply. Please try again in a moment.";btn.disabled=false;btn.textContent="Confirm my seat";}}}
